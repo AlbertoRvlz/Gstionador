@@ -1,4 +1,5 @@
 using System.Text;
+using GestionTareas.Application.Tareas.Eliminar;
 using GestionTareas.Domain.Repositories;
 using GestionTareas.Infrastructure.Repositories;
 using GestionTareasApp.Presentation;
@@ -12,4 +13,6 @@ IIntegranteRepository integrantes = new IntegranteRepositoryEnMemoria();
 Console.WriteLine("Gestión de tareas — estructura base");
 Console.WriteLine($"Integrantes disponibles: {integrantes.ObtenerTodos().Count}");
 Console.WriteLine($"Tareas en memoria: {tareas.Consultar().Count}");
-new MenuConsola().Ejecutar();
+IEliminarTarea eliminarTarea = new EliminarTarea(tareas);
+var pantallaEliminar = new PantallaEliminarTarea(eliminarTarea);
+new MenuConsola(pantallaEliminar).Ejecutar();

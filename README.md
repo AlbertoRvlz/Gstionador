@@ -1,6 +1,6 @@
 # Gestión de tareas
 
-Cascarón de una aplicación de consola en C# y .NET 10, con Arquitectura Limpia y principios de Domain-Driven Design (DDD). Las funcionalidades de usuario quedan pendientes para el trabajo en equipo.
+Aplicación de consola en C# y .NET 10, con Arquitectura Limpia y principios de Domain-Driven Design (DDD). La eliminación de tareas está implementada; registro, consulta y modificación quedan pendientes para el trabajo en equipo.
 
 ## Ejecutar
 
@@ -54,15 +54,31 @@ Las implementaciones reciben `ITareaRepository` por constructor. Registro y modi
 - Consulta por ID y modificación devuelven null cuando no existe la tarea. Eliminación devuelve false cuando no existe y true cuando se elimina.
 - Modificación es una actualización completa. Validar toda la solicitud y la existencia del responsable antes de cambiar el agregado, ya que el repositorio en memoria mantiene referencias a los objetos.
 - Capturar errores de entrada en la consola y mostrar mensajes claros, sin cerrar la aplicación.
-- El almacenamiento en memoria pierde los datos al cerrar la aplicación y está pensado para esta consola de un solo usuario. Las funcionalidades CRUD del usuario todavía no están implementadas; los métodos del repositorio son infraestructura compartida.
+- El almacenamiento en memoria pierde los datos al cerrar la aplicación y está pensado para esta consola de un solo usuario. Los métodos del repositorio son infraestructura compartida.
+
+## Eliminación de tareas
+
+Seleccionar la opción 4, ingresar el GUID de la tarea y confirmar con `s`. Enter en el identificador cancela; cualquier respuesta distinta de `s` en la confirmación también cancela. Se aceptan `s` y `S`. Una entrada inválida o una tarea inexistente muestra un mensaje y permite continuar usando el menú.
+
+`EliminarTarea` implementa el caso de uso en Application y recibe `ITareaRepository`. `PantallaEliminarTarea` maneja la entrada y la confirmación en la consola. `Program.cs` conecta ambos usando el mismo repositorio que utilizarán las otras funcionalidades.
+
+La consola inicia sin tareas. Para probar la eliminación desde el menú con una tarea real se necesita integrar la funcionalidad de registro. Las pruebas crean tareas de forma aislada, sin agregar datos de ejemplo a la aplicación.
+
+Ejecutar las pruebas de eliminación (no requieren paquetes externos):
+
+```bash
+dotnet run --project tests/GestionTareas.Eliminacion.Tests/GestionTareas.Eliminacion.Tests.csproj
+```
+
+El ejecutable verifica eliminación, conservación de otras tareas, identificadores inválidos o inexistentes, cancelación y confirmación. Devuelve código de salida 1 si alguna prueba falla. Se ejecuta con `dotnet run`, no con `dotnet test`.
 
 ## Flujo de Git
 
-Primero integrar este cascarón en `main`. Cada compañero debe actualizar su copia antes de crear su rama:
+El flujo del equipo es `main → develop → feature/<nombre>`. Cada compañero debe actualizar `develop` antes de crear su rama:
 
 ```bash
-git switch main
-git pull --ff-only origin main
+git switch develop
+git pull --ff-only origin develop
 git switch -c feature/registro-tareas
 ```
 
@@ -74,11 +90,11 @@ Al terminar, compilar, revisar cambios y subir la rama:
 dotnet build GestionTareas.slnx
 git status
 git add <archivos-de-tu-funcionalidad>
-git commit -m "feat: implementar registro de tareas"
+git commit -m "Agregar registro de tareas"
 git push -u origin feature/registro-tareas
 ```
 
-Crear un pull request hacia `main`, describir la funcionalidad y sus comprobaciones. Ajustar la rama y el mensaje al trabajo de cada integrante.
+Crear un pull request hacia `develop`, describir la funcionalidad y sus comprobaciones. Ajustar la rama y el mensaje al trabajo de cada integrante. La versión integrada y revisada en `develop` se lleva después a `main`.
 
 ## Criterios de entrega
 
@@ -88,4 +104,4 @@ Crear un pull request hacia `main`, describir la funcionalidad y sus comprobacio
 - Eliminación: elimina una tarea existente, confirma el resultado y maneja ID inexistente o mal escrito.
 - Integración: registrar → consultar → modificar/asignar → filtrar → eliminar. Compilación sin errores.
 
-El menú actual muestra mensajes de funcionalidad pendiente. No representa una aplicación CRUD terminada.
+El menú tiene eliminación disponible y muestra mensajes de funcionalidad pendiente para registro, consulta y modificación. La aplicación CRUD completa requiere integrar las cuatro ramas.

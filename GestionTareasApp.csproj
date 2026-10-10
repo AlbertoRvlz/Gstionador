@@ -7,6 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="src/**/*.cs" />
+    <Compile Remove="tests/**/*.cs" />
     <ProjectReference Include="src/GestionTareas.Application/GestionTareas.Application.csproj" />
     <ProjectReference Include="src/GestionTareas.Infrastructure/GestionTareas.Infrastructure.csproj" />
   </ItemGroup>
