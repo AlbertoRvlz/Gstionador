@@ -2,6 +2,14 @@ namespace GestionTareasApp.Presentation;
 
 public sealed class MenuConsola
 {
+    private readonly PantallaEliminarTarea _pantallaEliminar;
+
+    public MenuConsola(PantallaEliminarTarea pantallaEliminar)
+    {
+        ArgumentNullException.ThrowIfNull(pantallaEliminar);
+        _pantallaEliminar = pantallaEliminar;
+    }
+
     public void Ejecutar()
     {
         while (true)
@@ -28,7 +36,7 @@ public sealed class MenuConsola
                     Console.WriteLine("Pendiente: Ángel — feature/modificar-tareas.");
                     break;
                 case "4":
-                    Console.WriteLine("Pendiente: Edwin — feature/eliminar.");
+                    _pantallaEliminar.Ejecutar();
                     break;
                 default:
                     Console.WriteLine("Opción no válida. Selecciona del 0 al 4.");

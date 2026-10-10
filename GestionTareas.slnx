@@ -5,4 +5,7 @@
     <Project Path="src/GestionTareas.Application/GestionTareas.Application.csproj" />
     <Project Path="src/GestionTareas.Infrastructure/GestionTareas.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GestionTareas.Eliminacion.Tests/GestionTareas.Eliminacion.Tests.csproj" />
+  </Folder>
 </Solution>
