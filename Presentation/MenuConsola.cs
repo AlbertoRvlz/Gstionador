@@ -14,6 +14,12 @@ public sealed class MenuConsola
     {
         _tareas = tareas ?? throw new ArgumentNullException(nameof(tareas));
         _integrantes = integrantes ?? throw new ArgumentNullException(nameof(integrantes));
+    private readonly PantallaEliminarTarea _pantallaEliminar;
+
+    public MenuConsola(PantallaEliminarTarea pantallaEliminar)
+    {
+        ArgumentNullException.ThrowIfNull(pantallaEliminar);
+        _pantallaEliminar = pantallaEliminar;
     }
 
     public void Ejecutar()
@@ -42,7 +48,7 @@ public sealed class MenuConsola
                     Console.WriteLine("Pendiente: Ángel — feature/modificar-tareas.");
                     break;
                 case "4":
-                    Console.WriteLine("Pendiente: Edwin — feature/eliminar.");
+                    _pantallaEliminar.Ejecutar();
                     break;
                 default:
                     Console.WriteLine("Opción no válida. Selecciona del 0 al 4.");
